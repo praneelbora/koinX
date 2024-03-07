@@ -31,10 +31,10 @@ export default function Home({  }) {
         const [tetherInc, settetherInc] = useState(null);
         const options = {method: 'GET', headers: {'x-cg-demo-api-key': process.env.API_KEY}};
         const [fullCoin,setFullCoin]=useState({})
-        const [coinData,setCoinData]=useState({})
+        const [market,setMarket]=useState([])
         const [trend,setTrend]=useState([])
         const [str,setStr]=useState("")
-
+        const [perc,setPerc]=useState(0)
         async function getData(){
             try{
                 const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin`)
@@ -43,9 +43,11 @@ export default function Home({  }) {
                 const response1 = await fetch('https://api.coingecko.com/api/v3/search/trending', options);
                 const res1 = await response1.json();
                 setTrend(res1?.coins)
-                const fetchCoinData = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin', options)
-                const res2 = await fetchCoinData.json();
-                setCoinData(res2)
+                const marketData = await fetch('https://api.coingecko.com/api/v3/global')
+                const res2 = await marketData.json();
+                setMarket(res2)
+
+                setPerc(fullCoin?.market_data?.current_price?.usd)
             }
             catch(err){
                 console.log(err)
@@ -65,14 +67,9 @@ export default function Home({  }) {
           ];
         useEffect(()=>{
             getData()
-            // setCoin(coin)
-            // getData2()
+
         },[])
 
-        // const handleClick = () => {
-        //     console.log("click");
-        //     getData()
-        // }
         return (
     <div className="flex min-h-screen flex-col bg-[#EFF2F5] text-black gap-y-[20px] scrollbar-none scrollbar-track-transparent">
         {/* <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -149,6 +146,7 @@ export default function Home({  }) {
                     <div className="flex flex-row gap-[8px] items-center">
                         <div className=""><Image src={fullCoin?.image?.thumb} alt="image" height={28} width={28}/></div>
                         <div className="text-[20px] font-semibold">{fullCoin?.name}</div>
+                        <div className="text-[20px] font-semibold">{}</div>
                         <div className="text-[16px] text-[#5D667B] font-semibold">{fullCoin?.symbol?.toUpperCase()}</div>
                     </div>
                     {/* <div className="flex flex-row gap-[8px] items-center">
@@ -207,19 +205,45 @@ export default function Home({  }) {
                         
                         <TabPanel className="p-0" key={1} value={"Overview"}>
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
-                            <div className="font-semibold text-[24px] text-black text-lg">Performance</div>
-                            <div className="gap-[15px] w-full">
-                                <div className="">Todays High</div>
-                                <div className="">Todays High</div>
-                                <div className="">Todays Low</div>
-                                <div className="">Todays Low</div>
+                            <div className="font-semibold text-[24px] text-black text-lg">About</div>
+                            <div className="flex flex-col gap-[12px]">
+                                {fullCoin?.description?.en.split('.').slice(0, 2).join('.')}.
                             </div>
-                            <div className="font-semibold text-[24px] text-black text-lg">Fundamentals</div>
-                            <div className="gap-[15px] w-full">
-                                <div className="">Todays High</div>
-                                <div className="">Todays High</div>
-                                <div className="">Todays Low</div>
-                                <div className="">Todays Low</div>
+
+                            <div className="font-semibold text-[24px] text-black text-lg">Performance</div>
+                            <div className="flex flex-col gap-[12px]">
+                                <div className="flex flex-wrap justify-between">
+                                    <div className="w-[45%] min-h-[40px] flex flex-col justify-around">
+                                        <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                            <div className="text-[14px] text-[#44475B]">{fullCoin?.name} Price: </div>
+                                            <div className="">$ {fullCoin?.market_data?.low_24h?.usd}</div>
+                                        </div>
+                                    </div>
+                                    <div className="w-[45%] min-h-[40px] flex flex-col justify-around">
+                                        <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                            <div className="text-[14px] text-[#44475B]">Percentage Change: </div>
+                                            <div className="flex flex-row items-center gap-[6px]">
+                                                <svg className={fullCoin?.market_data?.price_change_percentage_24h_in_currency?.usd>0?"text-green-500":"text-red-500 rotate-180"} data-testid="geist-icon" fill="none" height="10" width="10" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
+                                            {fullCoin?.market_data?.price_change_percentage_24h_in_currency?.usd} %</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                    <div className=" flex flex-col justify-center items-center">
+                                        <div className="text-[14px] text-[#44475B] text-nowrap">Todays Low</div>
+                                        <div className="">$ {fullCoin?.market_data?.low_24h?.usd}</div>
+                                    </div>
+                                    <div className="w-[70%] bg-gradient-to-r from-[#FF4949] via-[#FFAF11] to-[#11EB68] h-[5px]"></div>
+                                        {/* <br></br> */}
+                                        {/* <div className={`h-[15px] bg-black ms-[${Math.round(((fullCoin?.market_data?.current_price?.usd-fullCoin?.market_data?.low_24h?.usd)/(fullCoin?.market_data?.high_24h?.usd-fullCoin?.market_data?.low_24h?.usd))*100)}%]`}></div> */}
+                                    <div className=" flex flex-col justify-center items-center">
+
+                                        <div className="text-[14px] text-[#44475B] text-nowrap">Todays High</div>
+                                        <div className="">$ {fullCoin?.market_data?.high_24h?.usd}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                             
@@ -227,6 +251,44 @@ export default function Home({  }) {
                         <TabPanel className="p-0" key={2} value={"Fundamentals"}>
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
                             <div className="font-semibold text-[24px] text-black text-lg">Fundamentals</div>
+                            <div className="flex flex-wrap w-full justify-between px-[3%]">
+                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                    <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                        <div className="text-[14px] text-[#44475B]">{fullCoin?.name} Price: </div>
+                                        <div className="">$ {fullCoin?.market_data?.low_24h?.usd}</div>
+                                    </div>
+                                    <div className="w-full bg-slate-300 h-[2px]"></div>
+                                </div>
+                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                    <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                        <div className="text-[14px] text-[#44475B]">Market Cap: </div>
+                                        <div className="">$ {market?.data?.total_market_cap?.usd}</div>
+                                    </div>
+                                    <div className="w-full bg-slate-300 h-[2px]"></div>
+                                </div>
+                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                    <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                        <div className="text-[14px] text-[#44475B]">24h High: </div>
+                                        <div className="">$ {fullCoin?.market_data?.high_24h?.usd}</div>
+                                    </div>
+                                    <div className="w-full bg-slate-300 h-[2px]"></div>
+                                </div>
+                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                    <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                        <div className="text-[14px] text-[#44475B]">24h Low: </div>
+                                        <div className="">$ {fullCoin?.market_data?.low_24h?.usd}</div>
+                                    </div>
+                                    <div className="w-full bg-slate-300 h-[2px]"></div>
+                                </div>
+                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                    <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                        <div className="text-[14px] text-[#44475B]">Volume/Market Cap: </div>
+                                        <div className="">$ {fullCoin?.market_data?.total_volume?.usd/market?.data?.total_market_cap?.usd}</div>
+                                    </div>
+                                    <div className="w-full bg-slate-300 h-[2px]"></div>
+                                </div>
+                                
+                            </div>
                         </div>
                         </TabPanel>
                         <TabPanel className="p-0" key={3} value={"News Insights"}>
