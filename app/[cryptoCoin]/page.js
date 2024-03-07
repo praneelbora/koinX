@@ -58,18 +58,12 @@ export default function Home({ params }) {
 
         // cosnt [crypto = "BITSTAMP:BTCUSD";
         
-
-        const coins = {"bitcoin":"BITSTAMP:BTCUSD","ethereum":"BITSTAMP:ETHUSD","binancecoin":"BINANCE:BNBUSD"}
-        var tradingviewConst = coins[params.cryptoCoin]
-        // console.log(tradingviewConst)
-        var crypto = "BITSTAMP:ETHUSD";
-        var crypto = "BINANCE:BNBUSD";
-
         const [bitcoinInc, setBitcoinInc] = useState(null);
         const [ethereumInc, setEthereumInc] = useState(null);
         const [tetherInc, settetherInc] = useState(null);
         const options = {method: 'GET', headers: {'x-cg-demo-api-key': process.env.API_KEY}};
         const [coin,setCoin]=useState()
+        const [coinName,setCoinName]=useState()
         const [trend,setTrend]=useState([])
         // const [trend2,setTrend2]=useState([])
         const [str,setStr]=useState("")
@@ -109,7 +103,8 @@ export default function Home({ params }) {
                 const response = await fetch(`https://api.coingecko.com/api/v3/coins/${params.cryptoCoin}`)
                 const res = await response.json();
                 setCoin(res?.symbol)
-                
+                setCoinName(res?.name)
+
                 const response1 = await fetch('https://api.coingecko.com/api/v3/search/trending', options);
                 const res1 = await response1.json();
                 setTrend(res1?.coins)
@@ -149,10 +144,10 @@ export default function Home({ params }) {
                 
             </div>
         </div>
-        <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] flex flex-row"><div className="font-normal">Cryptocurrencies &gt;&gt;&nbsp;</div>  <div className="font-semibold"> Bitcoin</div></div>
+        <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] flex flex-row"><div className="font-normal">Cryptocurrencies &gt;&gt;&nbsp;</div> {coinName} <div className="font-semibold"> {}</div></div>
         <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] w-[calc(100dvh-72px]] lg:w-[calc(100dvh-112px]) h-full flex flex-col lg:flex-row gap-[20px] ">
             <div className=" w-[100%] lg:w-[calc((100%-20px)*0.7)]  flex flex-col gap-[20px]">
-                <div className="bg-black h-[400px] pb-[500px] rounded-[8px] w-full">
+                <div className="bg-black pb-[500px] rounded-[8px] w-full">
                     {coin && <TradingViewWidget coin={coin} />}
                 </div>
                 <Tabs value="Overview">
