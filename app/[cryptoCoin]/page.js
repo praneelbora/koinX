@@ -84,9 +84,9 @@ export default function Home({ params }) {
                             Fundamentals
                             </div>
                         </Tab>
-                        <Tab key={3} value={"News Insights"}>
+                        <Tab key={3} value={"News"}>
                             <div className="flex items-center text-nowrap  cursor-pointer">
-                            News Insights
+                            News
                             </div>
                         </Tab>
                         <Tab key={4} value={"Sentiments"}>
@@ -226,9 +226,11 @@ export default function Home({ params }) {
                             </div>
                         </div>
                         </TabPanel>
-                        <TabPanel className="p-0" key={3} value={"News Insights"}>
+                        <TabPanel className="p-0" key={3} value={"News"}>
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
-                            <div className="font-semibold text-[24px] text-black text-lg">News Insights</div>
+                            <div className="font-semibold text-[24px] text-black text-lg">Related News</div>
+                            <div className="text-[#3E424A]">Lorem ipsum dolor sit amet consectetur. Aliquam placerat sit lobortis tristique pharetra. Diam id et lectus urna et tellus aliquam dictum at. Viverra diam suspendisse enim facilisi diam ut sed. Quam scelerisque fermentum sapien morbi sodales odio sed rhoncus. Ultricies urna volutpat pendisse enim facilisi diam ut sed. Quam scelerisque fermentum sapien morbi sodales odio sed rhoncus. </div>
+                            <div className="text-[#3E424A]">Lorem ipsum dolor sit amet consectetur. Aliquam placerat sit lobortis tristique pharetra. Diam id et lectus urna et tellus aliquam dictum at. Viverra diam suspendisse enim facilisi diam ut sed. Quam scelerisque fermentum sapien morbi sodales odio sed rhoncus. Ultricies urna volutpat pendisse enim facilisi diam ut sed. Quam scelerisque fermentum sapien morbi sodales odio sed rhoncus. Diam praesent massa dapibus magna aliquam a dictumst volutpat. Egestas vitae pellentesque auctor amet. Nunc sagittis libero adipiscing cursus felis pellentesque interdum. Odio cursus phasellus velit in senectus enim dui. Turpis tristique placerat interdum sed volutpat. Id imperdiet magna eget eros donec cursus nunc. Mauris faucibus diam mi nunc praesent massa turpis a. Integer dignissim augue viverra nulla et quis lobortis phasellus. Integer pellentesque enim convallis ultricies at. Fermentum hendrerit imperdiet nulla viverra faucibus. Sit aliquam massa vel convallis duis ac. Mi adipiscing semper scelerisque porttitor pulvinar nunc risus. Fermentum potenti iaculis lacinia congue ipsum fames amet dui. Purus ultrices tincidunt volutpat in eget. Ullamcorper dui</div>
                         </div>                        
                         </TabPanel>
                         <TabPanel className="p-0" key={4} value={"Sentiments"}>
@@ -402,8 +404,11 @@ export default function Home({ params }) {
                         </TabPanel>
                         <TabPanel className="p-0" key={6} value={"Tokenomics"}>
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
-                            <div className="font-semibold text-[24px] text-black text-lg"></div>
-                        </div>                        
+                            <div className="font-semibold text-[24px] text-black text-lg">Tokenomics</div>
+                            <div className="font-semibold text-[14px] text-black">Initial Distribution</div>
+                                <Image src="/images/chart.png" width={150} height={150} alt="chart" />
+                                <div className="text-[#3E424A]">Lorem ipsum dolor sit amet consectetur. Cras aliquet tristique ornare vestibulum nunc dignissim vel consequat. Leo etiam nascetur bibendum amet enim sit eget leo amet. At metus orci augue fusce eleifend lectus eu fusce adipiscing. Volutpat ultrices nibh sodales massa habitasse urna felis augue. Gravida aliquam fermentum augue eu. Imperdiet bibendum amet aliquam donec. Eget justo dui metus odio rutrum. Vel ipsum eget in at curabitur sem posuere facilisis vitae. Sed lorem sit mauris id eget arcu ut. Vulputate ipsum aliquet odio nisi eu ac risus.</div>
+                        </div>                           
                         </TabPanel>
                         <TabPanel className="p-0" key={7} value={"About"}>
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
@@ -458,9 +463,9 @@ export default function Home({ params }) {
                                 <CarouselContent>
                                     {trend?.map((row, index) => (
                                         <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
-                                            <Card className="h-[160px] bg-transparent border-none m-0 p-0" onClick={() => router.push(`../${row?.item?.id.toLowerCase()}`)}>
+                                            <Card className="h-[170px] bg-transparent border-none m-0 p-0" onClick={() => router.push(`../${row?.item?.id.toLowerCase()}`)}>
                                                 <CardContent className="flex flex-col m-0 p-[15px] border-[1px] h-full rounded-[8px]">
-                                                <div className=" flex flex-row items-center"><div className="h-[22px] w-[22px]"><Image alt="Image" src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
+                                                <div className=" flex flex-row items-center"><div className="flex justify-center h-[22px] w-[22px] items-center"><Image alt="Image" src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
                                                     <div className={`${row?.item?.data?.price_change_percentage_24h?.usd>0?"bg-[#EBF9F4]":"bg-[#ee685538]"} ms-[10px] rounded-[4px] px-[6px] py-[3px] gap-[6px] text-[13px] text-nowrap flex flex-row justify-center items-center`}> 
                                                         <svg className={row?.item?.data?.price_change_percentage_24h?.usd>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="5" width="5" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
                                                         {Math.round(row?.item?.data?.price_change_percentage_24h?.usd*100)/100} %
@@ -482,9 +487,9 @@ export default function Home({ params }) {
                                 <CarouselContent>
                                     {trend?.map((row, index) => (
                                         <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
-                                            <Card className="h-[160px] bg-transparent border-none m-0 p-0" onClick={() => router.push(`../${row?.item?.id.toLowerCase()}`)}>
+                                            <Card className="h-[170px] bg-transparent border-none m-0 p-0" onClick={() => router.push(`../${row?.item?.id.toLowerCase()}`)}>
                                                 <CardContent className="flex flex-col m-0 p-[15px] border-[1px] h-full rounded-[8px]">
-                                                <div className=" flex flex-row items-center"><div className="h-[22px] w-[22px]"><Image alt="Image" src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
+                                                <div className=" flex flex-row items-center"><div className="flex justify-center h-[22px] w-[22px] items-center"><Image alt="Image" src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
                                                     <div className={`${row?.item?.data?.price_change_percentage_24h?.usd>0?"bg-[#EBF9F4]":"bg-[#ee685538]"} ms-[10px] rounded-[4px] px-[6px] py-[3px] gap-[6px] text-[13px] text-nowrap flex flex-row justify-center items-center`}> 
                                                         <svg className={row?.item?.data?.price_change_percentage_24h?.usd>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="5" width="5" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
                                                         {Math.round(row?.item?.data?.price_change_percentage_24h?.usd*100)/100} %

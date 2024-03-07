@@ -15,7 +15,7 @@ function TradingViewWidget({ coin }) {
       script.innerHTML = `
         {
           "autosize": true,
-          "symbol": "${coin}USD",
+          "symbol": "${coin}USDT",
           "interval": "D",
           "timezone": "Asia/Kolkata",
           "theme": "light",
