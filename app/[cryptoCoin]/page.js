@@ -291,7 +291,7 @@ export default function Home({ params }) {
             
             <div className="w-[100%] rounded-[8px] lg:w-[calc((100%-20px)*0.3)] flex flex-col gap-[20px]">
                 <div className="h-[515px] bg-[#0052FE]"></div>
-                <div className="bg-white flex flex-col gap-[24px] p-[24px]">
+                {trend && <div className="bg-white flex flex-col gap-[24px] p-[24px]">
                     <div className="font-semibold text-[18px]">Trending Coins</div>
                     <div className="flex flex-col gap-[20px]">
                         {trend?.map((row,index) => {
@@ -312,13 +312,15 @@ export default function Home({ params }) {
                             }
                         })}
                     </div>
-                </div>
+                </div>}
+                
             </div>
             
         </div>
         <div className="w-[100%] min-h-[470px] bg-white">
             <div className="m-[45px] flex flex-col gap-[15px]">
-                <div className="font-semibold text-[18px]">You May Also Like</div>
+                { trend && <>
+                    <div className="font-semibold text-[18px]">Trending Coins</div>
                 <Carousel className="w-[95%] relative  justify-between mx-[2.5%]">
                                 <CarouselContent>
                                     {trend?.map((row, index) => (
@@ -342,7 +344,9 @@ export default function Home({ params }) {
                                 <CarouselPrevious />
                                 <CarouselNext />
                 </Carousel>
-                <div className="font-semibold text-[18px]">Trending Coins</div>
+                </> }   
+                { trend && <>
+                    <div className="font-semibold text-[18px]">Trending Coins</div>
                 <Carousel className="w-[95%] relative  justify-between mx-[2.5%]">
                                 <CarouselContent>
                                     {trend?.map((row, index) => (
@@ -366,6 +370,7 @@ export default function Home({ params }) {
                                 <CarouselPrevious />
                                 <CarouselNext />
                 </Carousel>
+                </> }
             </div>
                 
         </div>

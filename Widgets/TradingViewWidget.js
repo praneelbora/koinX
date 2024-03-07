@@ -22,7 +22,11 @@ function TradingViewWidget({ coin }) {
           "style": "2",
           "locale": "en",
           "enable_publishing": false,
-          "allow_symbol_change": true,
+          "allow_symbol_change": false,
+          "calendar": false,
+          "hide_top_toolbar": true,
+          "save_image": false,
+          "hide_volume": true,
           "calendar": false
         }`;
       container.current.appendChild(script);

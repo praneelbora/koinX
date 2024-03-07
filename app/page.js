@@ -8,7 +8,8 @@ import {
     CarouselPrevious,
   } from "@/components/ui/carousel"
   import { Card, CardContent } from "@/components/ui/card"
-  
+  import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button} from "@nextui-org/react";
+
 import {
     Tabs,
     TabsHeader,
@@ -22,104 +23,46 @@ import { useRouter } from 'next/navigation'
 
 export default function Home({  }) {
     const router = useRouter()
-    // Make a GET request
-    // fetch(`https://api.coingecko.com/api/v3/coins/list?x_cg_demo_api_key=${process.env.API_KEY}&ids='bitcoin'&vs_currencies=usd,inr`)
-    // .then(response => {
-    //     if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //     }
-    //     console.log( response.json());
-    // })
-    // .then(data => {
-    //     console.log(data);
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    // });
-    // var res;
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // useEffect(()=>{
-        
-    // },[])
-    
-    // console.log("a",res)
-    // const ids=['bitcoin','ethereum','tether'];
-    // var arr=[];
-    // for(var i=0;i<3;i++)
-    // {
-        //     console.log(i);
-        //     fetch(`https://api.coingecko.com/api/v3/coins/${ids[i]}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`, options)
-        //     .then(response => response.json())
-        //     .then(response => arr.push(response.json))
-        //     .catch(err => console.error(err));
-        // }
-        // console.log(arr);
-        // const [bitcoinPrice, setBitcoinPrice] = useState(null);
-
-        // cosnt [crypto = "BITSTAMP:BTCUSD";
         
         const [bitcoinInc, setBitcoinInc] = useState(null);
         const [ethereumInc, setEthereumInc] = useState(null);
         const [tetherInc, settetherInc] = useState(null);
         const options = {method: 'GET', headers: {'x-cg-demo-api-key': process.env.API_KEY}};
-        const [coin,setCoin]=useState()
-        const [coinName,setCoinName]=useState()
+        const [fullCoin,setFullCoin]=useState({})
+        const [coinData,setCoinData]=useState({})
         const [trend,setTrend]=useState([])
-        // const [trend2,setTrend2]=useState([])
         const [str,setStr]=useState("")
-        // async function getData2(){
-        //     try{
-        //         if(trend[0]?.item.id!=null){
-
-        //             var str2= await trend[0]?.item?.id +"%2C"+ trend[1]?.item?.id +"%2C"+trend[2]?.item?.id;
-        //             console.log("A");
-        //             console.log(str2)
-        //             setStr(str2)
-        //         }
-        //         // const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Ctether&vs_currencies=usd%2Cinr&include_24hr_change=true', options);
-        //         // const data = await response.json();
-        //         // setBitcoinInc(data.bitcoin.usd_24h_change);
-        //         // setEthereumInc(data.ethereum.usd_24h_change);
-        //         // settetherInc(data.tether.usd_24h_change);
-        //     }
-        //     catch(err){
-        //         console.log(err)
-        //     }
-        // }
-
-        async function getData2(){
-            try{
-                const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin`)
-                const res = await response.json();
-                setCoin(res?.symbol)
-            }
-            catch(err){
-                console.log(err)
-            }
-        }
 
         async function getData(){
             try{
                 const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin`)
                 const res = await response.json();
-                setCoin(res?.symbol)
-                setCoinName(res?.name)
-
+                setFullCoin(res)
                 const response1 = await fetch('https://api.coingecko.com/api/v3/search/trending', options);
                 const res1 = await response1.json();
                 setTrend(res1?.coins)
-                // if(trend[0]?.item.name!=undefined){
-
-                //     var str2= await trend[0]?.item?.id +"%2C"+ trend[1]?.item?.id +"%2C"+trend[2]?.item?.id;
-                //     console.log("A");
-                //     console.log(str2)
-                //     setStr(str2)
-                // }
+                const fetchCoinData = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin', options)
+                const res2 = await fetchCoinData.json();
+                setCoinData(res2)
             }
             catch(err){
                 console.log(err)
             }
         }
+        const menuItems = [
+            "Profile",
+            "Dashboard",
+            "Activity",
+            "Analytics",
+            "System",
+            "Deployments",
+            "My Settings",
+            "Team Settings",
+            "Help & Feedback",
+            "Log Out",
+          ];
         useEffect(()=>{
             getData()
             // setCoin(coin)
@@ -132,23 +75,91 @@ export default function Home({  }) {
         // }
         return (
     <div className="flex min-h-screen flex-col bg-[#EFF2F5] text-black gap-y-[20px] scrollbar-none scrollbar-track-transparent">
+        {/* <Navbar onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+        <NavbarBrand>
+          <p className="font-bold text-inherit">ACME</p>
+        </NavbarBrand>
+      </NavbarContent>
+
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarItem>
+          <Link color="foreground" href="#">
+            Features
+          </Link>
+        </NavbarItem>
+        <NavbarItem isActive>
+          <Link href="#" aria-current="page">
+            Customers
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="#">
+            Integrations
+          </Link>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem className="hidden lg:flex">
+          <Link href="#">Login</Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Button as={Link} color="primary" href="#" variant="flat">
+            Sign Up
+          </Button>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`}>
+            <Link
+              color={
+                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
+              }
+              className="w-full"
+              href="#"
+              size="lg"
+            >
+              {item}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
+    </Navbar> */}
         <div className=" w-full h-[80px] bg-white flex flex-row relative">
-            <div className="h-full absolute left-[60px] w-[96px] flex justify-center items-center">
-            <Image alt="Image" src="/images/logo.png" height={128} width={128}></Image>
+            <div className="h-full absolute left-[60px] w-[96px] flex justify-center items-center cursor-pointer" >
+            <Image alt="Image" src="/images/logo.png" height={128} width={128} />
             </div>
             <div className="h-full right-[56px]  absolute flex justify-between items-center gap-[32px]">
-                <div className="text-black">Crypto Taxes</div>
-                <div onClick={() =>handleClick()} className="text-black">Free Tools</div>
-                <div onClick={() =>handleClick()} className="text-black">Resource Center</div>
-                <div onClick={() =>handleClick()} className="h-[40px] w-[130px] text-center rounded-[8px] p-[8px] ml-[13px] bg-gradient-to-r from-[#2870EA] to-[#1B4AEF] ">Get Started</div>
+                <div className="text-black cursor-pointer">Crypto Taxes</div>
+                <div className="text-black cursor-pointer">Free Tools</div>
+                <div className="text-black cursor-pointer">Resource Center</div>
+                <div className="h-[40px] w-[130px] text-center rounded-[8px] p-[8px] ml-[13px] bg-gradient-to-r from-[#2870EA] to-[#1B4AEF] text-white cursor-pointer">Get Started</div>
                 
             </div>
         </div>
-        <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] flex flex-row"><div className="font-normal">Cryptocurrencies &gt;&gt;&nbsp;</div>  <div className="font-semibold"> {coinName}</div></div>
+        <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] flex flex-row"><div className="font-normal">Cryptocurrencies &gt;&gt;&nbsp;</div>  <div className="font-semibold"> {fullCoin?.name}</div></div>
         <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] w-[calc(100dvh-72px]] lg:w-[calc(100dvh-112px]) h-full flex flex-col lg:flex-row gap-[20px] ">
             <div className=" w-[100%] lg:w-[calc((100%-20px)*0.7)]  flex flex-col gap-[20px]">
-                <div className="bg-black h-[500px] rounded-[8px] w-full overflow-hidden">
-                    {coin && <TradingViewWidget coin={coin} />}
+                <div className="bg-white flex flex-col gap-[20px] p-[20px]">
+                    <div className="flex flex-row gap-[8px] items-center">
+                        <div className=""><Image src={fullCoin?.image?.thumb} alt="image" height={28} width={28}/></div>
+                        <div className="text-[20px] font-semibold">{fullCoin?.name}</div>
+                        <div className="text-[16px] text-[#5D667B] font-semibold">{fullCoin?.symbol?.toUpperCase()}</div>
+                    </div>
+                    {/* <div className="flex flex-row gap-[8px] items-center">
+                        <div className="text-[20px] font-semibold">{fullCoin?.market_data?.current_price?.usd}</div>
+                        <div className="text-[16px] text-[#5D667B] font-semibold">{fullCoin?.symbol?.toUpperCase()}</div>
+                    </div> */}
+                    
+
+                    <div className="bg-black h-[500px] w-full overflow-hidden">
+                        {fullCoin?.symbol && <TradingViewWidget coin={fullCoin?.symbol} />}
+                    </div>
                 </div>
                 <Tabs value="Overview">
                     <TabsHeader className="" indicatorProps={{
@@ -290,7 +301,14 @@ export default function Home({  }) {
             </div>
             
             <div className="w-[100%] rounded-[8px] lg:w-[calc((100%-20px)*0.3)] flex flex-col gap-[20px]">
-                <div className="h-[515px] bg-[#0052FE]"></div>
+                <div className="min-h-[515px] bg-[#0052FE] rounded-[8px] gap-[30px] py-[30px] px-[20px] flex flex-col items-center">
+                    <div className="text-center text-white flex flex-col gap-[14px]">
+                        <div  className="text-[28px] lg:text-[24px] mx-[24px] font-bold text-wrap">Get Started with KoinX for FREE</div>
+                        <div  className="text-[20px] mx-[30px] lg:mx-0 text-wrap lg:text-[14px] ">With our range of features that you can equip for free,KoinX allows you to be more educated and aware of your tax reports.</div>
+                    </div>
+                    <Image src="/images/image.png" alt="image" height={168} width={178} />
+                    <div className="bg-white text-[16px] my-[10px] font-semibold w-[230px] h-[48px] rounded-[8px] flex justify-center items-center gap-[6px] cursor-pointer">Get Started for FREE <Image src="/images/arrow.png" alt="arrow" height={20} width={20} /></div>
+                </div>
                 <div className="bg-white flex flex-col gap-[24px] p-[24px]">
                     <div className="font-semibold text-[18px]">Trending Coins</div>
                     <div className="flex flex-col gap-[20px]">
