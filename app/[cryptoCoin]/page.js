@@ -134,7 +134,7 @@ export default function Home({ params }) {
     <div className="flex min-h-screen flex-col bg-[#EFF2F5] text-black gap-y-[20px] scrollbar-none scrollbar-track-transparent">
         <div className=" w-full h-[80px] bg-white flex flex-row relative">
             <div className="h-full absolute left-[60px] w-[96px] flex justify-center items-center">
-                <Image alt="Image" src="/images/logo.png" height={48} width={48}></Image>
+                <Image alt="Image" src="/images/logo.png" height={128} width={128}></Image>
             </div>
             <div className="h-full right-[56px]  absolute flex justify-between items-center gap-[32px]">
                 <div className="text-black">Crypto Taxes</div>
@@ -298,7 +298,7 @@ export default function Home({ params }) {
                             if(index<3){
                                 return(
 
-                                    <div key={index} className="flex flex-row justify-between items-center">
+                                    <div key={index} className="flex flex-row justify-between items-center cursor-pointer" onClick={() => router.push(`../${row?.item?.id.toLowerCase()}`)}>
                                         <div className="flex flex-row gap-[8px] h-[24px]">
                                             <Image alt="Image" src={`${row?.item?.thumb}`} width={24} height={24} />
                                             <div>{row?.item?.name} ({row?.item?.symbol})</div>
