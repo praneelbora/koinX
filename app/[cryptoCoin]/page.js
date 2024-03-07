@@ -144,34 +144,34 @@ export default function Home({ params }) {
                 
             </div>
         </div>
-        <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] flex flex-row"><div className="font-normal">Cryptocurrencies &gt;&gt;&nbsp;</div> {coinName} <div className="font-semibold"> {}</div></div>
+        <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] flex flex-row"><div className="font-normal">Cryptocurrencies &gt;&gt;&nbsp;</div>  <div className="font-semibold"> {coinName}</div></div>
         <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] w-[calc(100dvh-72px]] lg:w-[calc(100dvh-112px]) h-full flex flex-col lg:flex-row gap-[20px] ">
             <div className=" w-[100%] lg:w-[calc((100%-20px)*0.7)]  flex flex-col gap-[20px]">
-                <div className="bg-black pb-[500px] rounded-[8px] w-full">
+                <div className="bg-black h-[500px] rounded-[8px] w-full overflow-hidden">
                     {coin && <TradingViewWidget coin={coin} />}
                 </div>
                 <Tabs value="Overview">
-                    <TabsHeader className="bg-transparent" indicatorProps={{
+                    <TabsHeader className="" indicatorProps={{
                         className:
-                            "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
+                            "",
                         }}> 
                         <Tab key={1} value={"Overview"}>
-                            <div className="flex items-center ">
+                            <div className="flex items-center  cursor-pointer">
                             Overview
                             </div>
                         </Tab>
                         <Tab key={2} value={"Fundamentals"}>
-                            <div className="flex items-center ">
+                            <div className="flex items-center  cursor-pointer">
                             Fundamentals
                             </div>
                         </Tab>
                         <Tab key={3} value={"News Insights"}>
-                            <div className="flex items-center text-nowrap">
+                            <div className="flex items-center text-nowrap  cursor-pointer">
                             News Insights
                             </div>
                         </Tab>
                         <Tab key={4} value={"Sentiments"}>
-                            <div className="flex items-center ">
+                            <div className="flex items-center  cursor-pointer">
                             Sentiments
                             </div>
                         </Tab>
@@ -232,45 +232,45 @@ export default function Home({ params }) {
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
                             <div className="font-semibold text-[24px] text-black text-lg">Team</div>
                             <div>Lorem ipsum dolor sit amet consectetur. Id consequat adipiscing arcu nibh. Eget mattis in mi integer sit egestas. Proin tempor id pretium quam. Facilisis purus convallis quam augue.</div>
-                            <div className="bg-[#E8F4FD] w-[790px] gap-[16px] rounded-[8px] p-[11px] flex flex-row">
-                                <div className="flex flex-col h-full items-center justify-center gap-[13px] w-[128px]">
-                                    <div className="bg-white rounded-[6px]  h-[104px] w-[96px]"></div>
+                            <div className="bg-[#E8F4FD] me-[30px] gap-[6px] rounded-[8px] p-[11px] items-center flex flex-col md:flex-row">
+                                <div className="flex flex-col h-full items-center justify-center gap-[13px] min-w-[128px] mx-[4px]">
+                                    <div className="bg-white rounded-[6px]  h-[104px] w-[6rem]"></div>
                                     <div className="gap-[4px] flex items-center flex-col justify-center">
                                         <div className="text-[#0F1629] text-[15px] p-0 m-0 text-center">Praneel Bora</div>
-                                        <div className="text-[#788F9B] text-[12px] p-0 m-0 text-center">Software Developer</div>
+                                        <div className="text-[#788F9B] text-[12px] -mt-[2px] p-0 m-0 text-center">Software Developer</div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col h-full justify-center text-[14px] font-normal w-[620px]">Lorem ipsum dolor sit amet consectetur. In justo rutrum sit sit fermentum ut libero hendrerit id. Tellus sit ornare netus sagittis in nunc convallis mattis maecenas. Tempus arcu leo sociis laoreet nec neque sed pellentesque viverra. Consectetur proin amet ut id facilisi quis consectetur. Tellus gravida ultricies feugiat sed eu egestas dolor est ipsum. Malesuada etiam mi gravida praesent interdu</div>
+                                <div className="flex flex-col h-full justify-center items-center text-[14px] font-normal text-justify py-[1rem] px-[0.5rem] me-[0.5rem]">Lorem ipsum dolor sit amet consectetur. In justo rutrum sit sit fermentum ut libero hendrerit id. Tellus sit ornare netus sagittis in nunc convallis mattis maecenas. Tempus arcu leo sociis laoreet nec neque sed pellentesque viverra. Consectetur proin amet ut id facilisi quis consectetur. Tellus gravida ultricies feugiat sed eu egestas dolor est ipsum. Malesuada etiam mi gravida praesent interdu</div>
                             </div>
-                            <div className="bg-[#E8F4FD] w-[790px] gap-[16px] rounded-[8px] p-[11px] flex flex-row">
-                                <div className="flex flex-col h-full items-center justify-center gap-[13px] w-[128px]">
-                                    <div className="bg-white rounded-[6px]  h-[104px] w-[96px]"></div>
+                            <div className="bg-[#E8F4FD] me-[30px] gap-[6px] rounded-[8px] p-[11px] items-center flex flex-col md:flex-row">
+                                <div className="flex flex-col h-full items-center justify-center gap-[13px] min-w-[128px] mx-[4px]">
+                                    <div className="bg-white rounded-[6px]  h-[104px] w-[6rem]"></div>
                                     <div className="gap-[4px] flex items-center flex-col justify-center">
                                         <div className="text-[#0F1629] text-[15px] p-0 m-0 text-center">Praneel Bora</div>
-                                        <div className="text-[#788F9B] text-[12px] p-0 m-0 text-center">Software Developer</div>
+                                        <div className="text-[#788F9B] text-[12px] -mt-[2px] p-0 m-0 text-center">Software Developer</div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col h-full justify-center text-[14px] font-normal w-[620px]">Lorem ipsum dolor sit amet consectetur. In justo rutrum sit sit fermentum ut libero hendrerit id. Tellus sit ornare netus sagittis in nunc convallis mattis maecenas. Tempus arcu leo sociis laoreet nec neque sed pellentesque viverra. Consectetur proin amet ut id facilisi quis consectetur. Tellus gravida ultricies feugiat sed eu egestas dolor est ipsum. Malesuada etiam mi gravida praesent interdu</div>
+                                <div className="flex flex-col h-full justify-center items-center text-[14px] font-normal text-justify py-[1rem] px-[0.5rem] me-[0.5rem]">Lorem ipsum dolor sit amet consectetur. In justo rutrum sit sit fermentum ut libero hendrerit id. Tellus sit ornare netus sagittis in nunc convallis mattis maecenas. Tempus arcu leo sociis laoreet nec neque sed pellentesque viverra. Consectetur proin amet ut id facilisi quis consectetur. Tellus gravida ultricies feugiat sed eu egestas dolor est ipsum. Malesuada etiam mi gravida praesent interdu</div>
                             </div>
-                            <div className="bg-[#E8F4FD] w-[790px] gap-[16px] rounded-[8px] p-[11px] flex flex-row">
-                                <div className="flex flex-col h-full items-center justify-center gap-[13px] w-[128px]">
-                                    <div className="bg-white rounded-[6px]  h-[104px] w-[96px]"></div>
+                            <div className="bg-[#E8F4FD] me-[30px] gap-[6px] rounded-[8px] p-[11px] items-center flex flex-col md:flex-row">
+                                <div className="flex flex-col h-full items-center justify-center gap-[13px] min-w-[128px] mx-[4px]">
+                                    <div className="bg-white rounded-[6px]  h-[104px] w-[6rem]"></div>
                                     <div className="gap-[4px] flex items-center flex-col justify-center">
                                         <div className="text-[#0F1629] text-[15px] p-0 m-0 text-center">Praneel Bora</div>
-                                        <div className="text-[#788F9B] text-[12px] p-0 m-0 text-center">Software Developer</div>
+                                        <div className="text-[#788F9B] text-[12px] -mt-[2px] p-0 m-0 text-center">Software Developer</div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col h-full justify-center text-[14px] font-normal w-[620px]">Lorem ipsum dolor sit amet consectetur. In justo rutrum sit sit fermentum ut libero hendrerit id. Tellus sit ornare netus sagittis in nunc convallis mattis maecenas. Tempus arcu leo sociis laoreet nec neque sed pellentesque viverra. Consectetur proin amet ut id facilisi quis consectetur. Tellus gravida ultricies feugiat sed eu egestas dolor est ipsum. Malesuada etiam mi gravida praesent interdu</div>
+                                <div className="flex flex-col h-full justify-center items-center text-[14px] font-normal text-justify py-[1rem] px-[0.5rem] me-[0.5rem]">Lorem ipsum dolor sit amet consectetur. In justo rutrum sit sit fermentum ut libero hendrerit id. Tellus sit ornare netus sagittis in nunc convallis mattis maecenas. Tempus arcu leo sociis laoreet nec neque sed pellentesque viverra. Consectetur proin amet ut id facilisi quis consectetur. Tellus gravida ultricies feugiat sed eu egestas dolor est ipsum. Malesuada etiam mi gravida praesent interdu</div>
                             </div>
-                            <div className="bg-[#E8F4FD] w-[790px] gap-[16px] rounded-[8px] p-[11px] flex flex-row">
-                                <div className="flex flex-col h-full items-center justify-center gap-[13px] w-[128px]">
-                                    <div className="bg-white rounded-[6px]  h-[104px] w-[96px]"></div>
+                            <div className="bg-[#E8F4FD] me-[30px] gap-[6px] rounded-[8px] p-[11px] items-center flex flex-col md:flex-row">
+                                <div className="flex flex-col h-full items-center justify-center gap-[13px] min-w-[128px] mx-[4px]">
+                                    <div className="bg-white rounded-[6px]  h-[104px] w-[6rem]"></div>
                                     <div className="gap-[4px] flex items-center flex-col justify-center">
                                         <div className="text-[#0F1629] text-[15px] p-0 m-0 text-center">Praneel Bora</div>
-                                        <div className="text-[#788F9B] text-[12px] p-0 m-0 text-center">Software Developer</div>
+                                        <div className="text-[#788F9B] text-[12px] -mt-[2px] p-0 m-0 text-center">Software Developer</div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col h-full justify-center text-[14px] font-normal w-[620px]">Lorem ipsum dolor sit amet consectetur. In justo rutrum sit sit fermentum ut libero hendrerit id. Tellus sit ornare netus sagittis in nunc convallis mattis maecenas. Tempus arcu leo sociis laoreet nec neque sed pellentesque viverra. Consectetur proin amet ut id facilisi quis consectetur. Tellus gravida ultricies feugiat sed eu egestas dolor est ipsum. Malesuada etiam mi gravida praesent interdu</div>
+                                <div className="flex flex-col h-full justify-center items-center text-[14px] font-normal text-justify py-[1rem] px-[0.5rem] me-[0.5rem]">Lorem ipsum dolor sit amet consectetur. In justo rutrum sit sit fermentum ut libero hendrerit id. Tellus sit ornare netus sagittis in nunc convallis mattis maecenas. Tempus arcu leo sociis laoreet nec neque sed pellentesque viverra. Consectetur proin amet ut id facilisi quis consectetur. Tellus gravida ultricies feugiat sed eu egestas dolor est ipsum. Malesuada etiam mi gravida praesent interdu</div>
                             </div>
                         </div>                        
                         </TabPanel>
