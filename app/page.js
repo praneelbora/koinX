@@ -1,29 +1,14 @@
 "use client"
 import Image from "next/image";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-  } from "@/components/ui/carousel"
-  import { Card, CardContent } from "@/components/ui/card"
-  import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button} from "@nextui-org/react";
-
-import {
-    Tabs,
-    TabsHeader,
-    TabsBody,
-    Tab,
-    TabPanel,
-  } from "@material-tailwind/react";
-  import { useEffect, useState } from "react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, } from "@/components/ui/carousel"
+import { Card, CardContent } from "@/components/ui/card"
+import { Tabs, TabsHeader, TabsBody, Tab, TabPanel,} from "@material-tailwind/react";
+import { useEffect, useState } from "react";
 import TradingViewWidget from "@/Widgets/TradingViewWidget";
 import { useRouter } from 'next/navigation'
 
 export default function Home({  }) {
     const router = useRouter()
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
         
         const [bitcoinInc, setBitcoinInc] = useState(null);
@@ -53,18 +38,7 @@ export default function Home({  }) {
                 console.log(err)
             }
         }
-        const menuItems = [
-            "Profile",
-            "Dashboard",
-            "Activity",
-            "Analytics",
-            "System",
-            "Deployments",
-            "My Settings",
-            "Team Settings",
-            "Help & Feedback",
-            "Log Out",
-          ];
+        
         useEffect(()=>{
             getData()
 
@@ -72,61 +46,7 @@ export default function Home({  }) {
 
         return (
     <div className="flex min-h-screen flex-col bg-[#EFF2F5] text-black gap-y-[20px] scrollbar-none scrollbar-track-transparent">
-        {/* <Navbar onMenuOpenChange={setIsMenuOpen}>
-      <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
-        <NavbarBrand>
-          <p className="font-bold text-inherit">ACME</p>
-        </NavbarBrand>
-      </NavbarContent>
-
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={
-                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
-              }
-              className="w-full"
-              href="#"
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
-    </Navbar> */}
+       
         <div className=" w-full h-[80px] bg-white flex flex-row relative">
             <div className="h-full absolute left-[60px] w-[96px] flex justify-center items-center cursor-pointer" >
             <Image alt="Image" src="/images/logo.png" height={128} width={128} />
@@ -149,10 +69,7 @@ export default function Home({  }) {
                         <div className="text-[20px] font-semibold">{}</div>
                         <div className="text-[16px] text-[#5D667B] font-semibold">{fullCoin?.symbol?.toUpperCase()}</div>
                     </div>
-                    {/* <div className="flex flex-row gap-[8px] items-center">
-                        <div className="text-[20px] font-semibold">{fullCoin?.market_data?.current_price?.usd}</div>
-                        <div className="text-[16px] text-[#5D667B] font-semibold">{fullCoin?.symbol?.toUpperCase()}</div>
-                    </div> */}
+                    
                     
 
                     <div className="bg-black h-[500px] w-full overflow-hidden">
@@ -189,14 +106,14 @@ export default function Home({  }) {
                             Team
                             </div>
                         </Tab>
-                        <Tab key={6} value={"Technicals"}>
-                            <div className="flex items-center ">
-                            Technicals
-                            </div>
-                        </Tab>
-                        <Tab key={7} value={"Tokenomics"}>
+                        <Tab key={6} value={"Tokenomics"}>
                             <div className="flex items-center ">
                             Tokenomics
+                            </div>
+                        </Tab>
+                        <Tab key={7} value={"About"}>
+                            <div className="flex items-center ">
+                            About
                             </div>
                         </Tab>
                         
@@ -213,13 +130,13 @@ export default function Home({  }) {
                             <div className="font-semibold text-[24px] text-black text-lg">Performance</div>
                             <div className="flex flex-col gap-[12px]">
                                 <div className="flex flex-wrap justify-between">
-                                    <div className="w-[45%] min-h-[40px] flex flex-col justify-around">
+                                    <div className="w-[90%] md:w-[45%] min-h-[40px] flex flex-col justify-around">
                                         <div className="gap-[15px] w-full flex flex-row items-center justify-between">
                                             <div className="text-[14px] text-[#44475B]">{fullCoin?.name} Price: </div>
                                             <div className="">$ {fullCoin?.market_data?.low_24h?.usd}</div>
                                         </div>
                                     </div>
-                                    <div className="w-[45%] min-h-[40px] flex flex-col justify-around">
+                                    <div className="w-[90%] md:w-[45%] min-h-[40px] flex flex-col justify-around">
                                         <div className="gap-[15px] w-full flex flex-row items-center justify-between">
                                             <div className="text-[14px] text-[#44475B]">Percentage Change: </div>
                                             <div className="flex flex-row items-center gap-[6px]">
@@ -252,38 +169,63 @@ export default function Home({  }) {
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
                             <div className="font-semibold text-[24px] text-black text-lg">Fundamentals</div>
                             <div className="flex flex-wrap w-full justify-between px-[3%]">
-                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                <div className="w-[90%] md:w-[45%] min-h-[60px] flex flex-col justify-around">
                                     <div className="gap-[15px] w-full flex flex-row items-center justify-between">
                                         <div className="text-[14px] text-[#44475B]">{fullCoin?.name} Price: </div>
                                         <div className="">$ {fullCoin?.market_data?.low_24h?.usd}</div>
                                     </div>
                                     <div className="w-full bg-slate-300 h-[2px]"></div>
                                 </div>
-                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                <div className="w-[90%] md:w-[45%] min-h-[60px] flex flex-col justify-around">
                                     <div className="gap-[15px] w-full flex flex-row items-center justify-between">
-                                        <div className="text-[14px] text-[#44475B]">Market Cap: </div>
-                                        <div className="">$ {market?.data?.total_market_cap?.usd}</div>
+                                        <div className="text-[14px] text-[#44475B]">30 Days % Change: </div>
+                                        <div className="flex flex-row items-center gap-[6px]">
+                                                <svg className={fullCoin?.market_data?.price_change_percentage_24h_in_currency?.usd>0?"text-green-500":"text-red-500 rotate-180"} data-testid="geist-icon" fill="none" height="10" width="10" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
+                                            <div className=""> {fullCoin?.market_data?.price_change_percentage_30d_in_currency?.usd}%</div>
+                                    </div>
                                     </div>
                                     <div className="w-full bg-slate-300 h-[2px]"></div>
                                 </div>
-                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                
+                                <div className="w-[90%] md:w-[45%] min-h-[60px] flex flex-col justify-around">
                                     <div className="gap-[15px] w-full flex flex-row items-center justify-between">
                                         <div className="text-[14px] text-[#44475B]">24h High: </div>
                                         <div className="">$ {fullCoin?.market_data?.high_24h?.usd}</div>
                                     </div>
                                     <div className="w-full bg-slate-300 h-[2px]"></div>
                                 </div>
-                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                <div className="w-[90%] md:w-[45%] min-h-[60px] flex flex-col justify-around">
                                     <div className="gap-[15px] w-full flex flex-row items-center justify-between">
                                         <div className="text-[14px] text-[#44475B]">24h Low: </div>
                                         <div className="">$ {fullCoin?.market_data?.low_24h?.usd}</div>
                                     </div>
                                     <div className="w-full bg-slate-300 h-[2px]"></div>
                                 </div>
-                                <div className="w-[45%] min-h-[60px] flex flex-col justify-around">
+                                <div className="w-[90%] md:w-[45%] min-h-[60px] flex flex-col justify-around">
+                                    <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                        <div className="text-[14px] text-[#44475B]">Total Volume: </div>
+                                        <div className="">$ {fullCoin?.market_data?.total_volume?.usd}</div>
+                                    </div>
+                                    <div className="w-full bg-slate-300 h-[2px]"></div>
+                                </div>
+                                <div className="w-[90%] md:w-[45%] min-h-[60px] flex flex-col justify-around">
+                                    <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                        <div className="text-[14px] text-[#44475B]">Market Cap: </div>
+                                        <div className="">$ {Math.round(market?.data?.total_market_cap?.usd)}</div>
+                                    </div>
+                                    <div className="w-full bg-slate-300 h-[2px]"></div>
+                                </div>
+                                <div className="w-[90%] md:w-[45%] min-h-[60px] flex flex-col justify-around">
                                     <div className="gap-[15px] w-full flex flex-row items-center justify-between">
                                         <div className="text-[14px] text-[#44475B]">Volume/Market Cap: </div>
-                                        <div className="">$ {fullCoin?.market_data?.total_volume?.usd/market?.data?.total_market_cap?.usd}</div>
+                                        <div className="">{Math.round(fullCoin?.market_data?.total_volume?.usd/market?.data?.total_market_cap?.usd*100000000)/100000000}</div>
+                                    </div>
+                                    <div className="w-full bg-slate-300 h-[2px]"></div>
+                                </div>
+                                <div className="w-[90%] md:w-[45%] min-h-[60px] flex flex-col justify-around">
+                                    <div className="gap-[15px] w-full flex flex-row items-center justify-between">
+                                        <div className="text-[14px] text-[#44475B]">Market Cap %: </div>
+                                        <div className="">{Math.round(market?.data?.market_cap_percentage[`${fullCoin?.symbol}`]*100000)/100000} %</div>
                                     </div>
                                     <div className="w-full bg-slate-300 h-[2px]"></div>
                                 </div>
@@ -299,6 +241,124 @@ export default function Home({  }) {
                         <TabPanel className="p-0" key={4} value={"Sentiments"}>
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
                             <div className="font-semibold text-[24px] text-black text-lg">Sentiments</div>
+                            <div className="flex flex-col gap-[15px]">
+                                <div className="flex flex-row items-center">
+
+                                    <div className="font-semibold text-[16px] text-[#44475B] me-[4px]">Key Events </div>
+                                    <Image className="cursor-pointer" src="/images/i.png" alt="i" height={14} width={14} />
+                                </div>
+                                <Carousel className=" ms-[5%] w-[90%] relative  justify-between mx-[2.5%]">
+                                <CarouselContent>
+                                        <CarouselItem key={0} className="basis-1/2 md:basis-1/2 lg:basis-1/2 xl:basis-1/2">
+                                            <Card className="h-[200px] bg-[#E8F4FD] border-none m-0 p-0">
+                                                <CardContent className="flex flex-row m-0 p-[15px] justify-start gap-[8px] h-full rounded-[8px]">
+                                                    <div className="min-h-[40px] min-w-[40px]">
+                                                        <Image src="/images/icon1.png" alt="icon" width={40} height={40} />
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-[7px] pe-[10px]">
+                                                        <div className="text-[14px] line-clamp-2">Lorem ipsum dolor sit amet consectetur. Dui vel quis dignissim mattis enim tincidunt.</div>
+                                                        <div  className="text-[12px] text-[#3E5765] line-clamp-6">Lorem ipsum dolor sit amet consectetur. Ac phasellus risus est faucibus metus quis. Amet sapien quam viverra adipiscing condimentum. Ac consectetur et pretium in a bibendum in. Sed vitae sit nisi viverra natoque lacinia libero enim.</div>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </CarouselItem>
+                                        <CarouselItem key={0} className="basis-1/2 md:basis-1/2 lg:basis-1/2 xl:basis-1/2">
+                                            <Card className="h-[200px] bg-[#EBF9F4] border-none m-0 p-0">
+                                            <CardContent className="flex flex-row m-0 p-[15px] justify-start gap-[8px] h-full rounded-[8px]">
+                                                    <div className="min-h-[40px] min-w-[40px]">
+                                                        <Image src="/images/icon2.png" alt="icon" width={40} height={40} />
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-[7px] pe-[10px]">
+                                                        <div className="text-[14px] line-clamp-2">Lorem ipsum dolor sit amet consectetur. Dui vel quis dignissim mattis enim tincidunt.</div>
+                                                        <div  className="text-[12px] text-[#3E5765] line-clamp-6">Lorem ipsum dolor sit amet consectetur. Ac phasellus risus est faucibus metus quis. Amet sapien quam viverra adipiscing condimentum. Ac consectetur et pretium in a bibendum in. Sed vitae sit nisi viverra natoque lacinia libero enim. </div>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </CarouselItem>
+                                        <CarouselItem key={0} className="basis-1/2 md:basis-1/2 lg:basis-1/2 xl:basis-1/2">
+                                            <Card className="h-[200px] bg-[#E8F4FD] border-none m-0 p-0">
+                                                <CardContent className="flex flex-row m-0 p-[15px] justify-start gap-[8px] h-full rounded-[8px]">
+                                                    <div className="min-h-[40px] min-w-[40px]">
+                                                        <Image src="/images/icon1.png" alt="icon" width={40} height={40} />
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-[7px] pe-[10px]">
+                                                        <div className="text-[14px] line-clamp-2">Lorem ipsum dolor sit amet consectetur. Dui vel quis dignissim mattis enim tincidunt.</div>
+                                                        <div  className="text-[12px] text-[#3E5765] line-clamp-6">Lorem ipsum dolor sit amet consectetur. Ac phasellus risus est faucibus metus quis. Amet sapien quam viverra adipiscing condimentum. Ac consectetur et pretium in a bibendum in. Sed vitae sit nisi viverra natoque lacinia libero enim.</div>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </CarouselItem>
+                                        <CarouselItem key={0} className="basis-1/2 md:basis-1/2 lg:basis-1/2 xl:basis-1/2">
+                                            <Card className="h-[200px] bg-[#EBF9F4] border-none m-0 p-0">
+                                            <CardContent className="flex flex-row m-0 p-[15px] justify-start gap-[8px] h-full rounded-[8px]">
+                                                    <div className="min-h-[40px] min-w-[40px]">
+                                                        <Image src="/images/icon2.png" alt="icon" width={40} height={40} />
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-[7px] pe-[10px]">
+                                                        <div className="text-[14px] line-clamp-2">Lorem ipsum dolor sit amet consectetur. Dui vel quis dignissim mattis enim tincidunt.</div>
+                                                        <div  className="text-[12px] text-[#3E5765] line-clamp-6">Lorem ipsum dolor sit amet consectetur. Ac phasellus risus est faucibus metus quis. Amet sapien quam viverra adipiscing condimentum. Ac consectetur et pretium in a bibendum in. Sed vitae sit nisi viverra natoque lacinia libero enim. </div>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </CarouselItem>
+                                        <CarouselItem key={0} className="basis-1/2 md:basis-1/2 lg:basis-1/2 xl:basis-1/2">
+                                            <Card className="h-[200px] bg-[#E8F4FD] border-none m-0 p-0">
+                                                <CardContent className="flex flex-row m-0 p-[15px] justify-start gap-[8px] h-full rounded-[8px]">
+                                                    <div className="min-h-[40px] min-w-[40px]">
+                                                        <Image src="/images/icon1.png" alt="icon" width={40} height={40} />
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-[7px] pe-[10px]">
+                                                        <div className="text-[14px] line-clamp-2">Lorem ipsum dolor sit amet consectetur. Dui vel quis dignissim mattis enim tincidunt.</div>
+                                                        <div  className="text-[12px] text-[#3E5765] line-clamp-6">Lorem ipsum dolor sit amet consectetur. Ac phasellus risus est faucibus metus quis. Amet sapien quam viverra adipiscing condimentum. Ac consectetur et pretium in a bibendum in. Sed vitae sit nisi viverra natoque lacinia libero enim.</div>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </CarouselItem>
+                                        <CarouselItem key={0} className="basis-1/2 md:basis-1/2 lg:basis-1/2 xl:basis-1/2">
+                                            <Card className="h-[200px] bg-[#EBF9F4] border-none m-0 p-0">
+                                            <CardContent className="flex flex-row m-0 p-[15px] justify-start gap-[8px] h-full rounded-[8px]">
+                                                    <div className="min-h-[40px] min-w-[40px]">
+                                                        <Image src="/images/icon2.png" alt="icon" width={40} height={40} />
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-[7px] pe-[10px]">
+                                                        <div className="text-[14px] line-clamp-2">Lorem ipsum dolor sit amet consectetur. Dui vel quis dignissim mattis enim tincidunt.</div>
+                                                        <div  className="text-[12px] text-[#3E5765] line-clamp-6">Lorem ipsum dolor sit amet consectetur. Ac phasellus risus est faucibus metus quis. Amet sapien quam viverra adipiscing condimentum. Ac consectetur et pretium in a bibendum in. Sed vitae sit nisi viverra natoque lacinia libero enim. </div>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </CarouselItem>
+                                </CarouselContent>
+                                <CarouselPrevious />
+                                <CarouselNext />
+                                </Carousel>
+                            </div>
+                            <div className="flex flex-col gap-[15px]">
+                                <div className="flex flex-row items-center">
+
+                                    <div className="font-semibold text-[16px] text-[#44475B] me-[4px]">Analyst Estimates </div>
+                                    <Image className="cursor-pointer" src="/images/i.png" alt="i" height={14} width={14} />
+                                </div>
+                                <div className="flex flex-row gap-[30px]">
+                                    <div className="rounded-full bg-[#EBF9F4] h-[120px] w-[120px] flex justify-center items-center text-[36px] text-[#0FBA83] font-semibold">76%</div>
+                                    <div className="flex flex-col justify-between py-[10px]">
+                                        <div className="flex flex-row items-center gap-[15px]">
+                                            <div className="w-[30px]">Buy</div>
+                                            <div className="w-[456px] bg-[#00B386] h-[6px] rounded-[2px]"></div>
+                                            <div className="text-[12px] text-[#7C7E8C]">76%</div>
+                                        </div>
+                                        <div className="flex flex-row items-center gap-[15px]">
+                                            <div className="w-[30px]">Hold</div>
+                                            <div className="w-[56px] bg-[#C7C8CE] h-[6px] rounded-[2px]"></div>
+                                            <div className="text-[12px] text-[#7C7E8C]">8%</div>
+                                        </div>
+                                        <div className="flex flex-row items-center gap-[15px]">
+                                            <div className="w-[30px]">Sell</div>
+                                            <div className="w-[96px] bg-[#F7324C] h-[6px] rounded-[2px]"></div>
+                                            <div className="text-[12px] text-[#7C7E8C]">16%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>                        
                         </TabPanel>
                         <TabPanel className="p-0" key={5} value={"Team"}>
@@ -347,14 +407,16 @@ export default function Home({  }) {
                             </div>
                         </div>                        
                         </TabPanel>
-                        <TabPanel className="p-0" key={6} value={"Technicals"}>
+                        <TabPanel className="p-0" key={6} value={"Tokenomics"}>
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
-                            <div className="font-semibold text-[24px] text-black text-lg">Technicals</div>
+                            <div className="font-semibold text-[24px] text-black text-lg"></div>
                         </div>                        
                         </TabPanel>
-                        <TabPanel className="p-0" key={7} value={"Tokenomics"}>
+                        <TabPanel className="p-0" key={7} value={"About"}>
                         <div className="bg-white min-h-[400px] flex flex-col w-full rounded-[8px] p-[24px] gap-[24px] mt-[16px]">
-                            <div className="font-semibold text-[24px] text-black text-lg">Tokenomics</div>
+                            <div className="font-semibold text-[24px] text-black text-lg">{fullCoin?.name} - What is {fullCoin?.name}?</div>
+                            <div className="text-[#3E424A]">Lorem ipsum dolor sit amet consectetur. Aliquam placerat sit lobortis tristique pharetra. Diam id et lectus urna et tellus aliquam dictum at. Viverra diam suspendisse enim facilisi diam ut sed. Quam scelerisque fermentum sapien morbi sodales odio sed rhoncus. Ultricies urna volutpat pendisse enim facilisi diam ut sed. Quam scelerisque fermentum sapien morbi sodales odio sed rhoncus. </div>
+                            <div className="text-[#3E424A]">Lorem ipsum dolor sit amet consectetur. Aliquam placerat sit lobortis tristique pharetra. Diam id et lectus urna et tellus aliquam dictum at. Viverra diam suspendisse enim facilisi diam ut sed. Quam scelerisque fermentum sapien morbi sodales odio sed rhoncus. Ultricies urna volutpat pendisse enim facilisi diam ut sed. Quam scelerisque fermentum sapien morbi sodales odio sed rhoncus. Diam praesent massa dapibus magna aliquam a dictumst volutpat. Egestas vitae pellentesque auctor amet. Nunc sagittis libero adipiscing cursus felis pellentesque interdum. Odio cursus phasellus velit in senectus enim dui. Turpis tristique placerat interdum sed volutpat. Id imperdiet magna eget eros donec cursus nunc. Mauris faucibus diam mi nunc praesent massa turpis a. Integer dignissim augue viverra nulla et quis lobortis phasellus. Integer pellentesque enim convallis ultricies at. Fermentum hendrerit imperdiet nulla viverra faucibus. Sit aliquam massa vel convallis duis ac. Mi adipiscing semper scelerisque porttitor pulvinar nunc risus. Fermentum potenti iaculis lacinia congue ipsum fames amet dui. Purus ultrices tincidunt volutpat in eget. Ullamcorper dui</div>
                         </div>
                         </TabPanel>
                     </TabsBody>
