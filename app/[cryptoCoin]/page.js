@@ -1,6 +1,15 @@
 "use client"
 import Image from "next/image";
 import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+  } from "@/components/ui/carousel"
+  import { Card, CardContent } from "@/components/ui/card"
+  
+import {
     Tabs,
     TabsHeader,
     TabsBody,
@@ -44,29 +53,69 @@ export default function Home({ params }) {
         //     .catch(err => console.error(err));
         // }
         // console.log(arr);
-        // const [bitcoinPrice, set BitcoinPrice] = useState(null);
+        // const [bitcoinPrice, setBitcoinPrice] = useState(null);
 
         // cosnt [crypto = "BITSTAMP:BTCUSD";
+        
 
         const coins = {"bitcoin":"BITSTAMP:BTCUSD","ethereum":"BITSTAMP:ETHUSD","binancecoin":"BINANCE:BNBUSD"}
-        var tradingviewConst = coins["bitcoin"]
-        console.log(tradingviewConst)
+        var tradingviewConst = coins[params.cryptoCoin]
+        // console.log(tradingviewConst)
         var crypto = "BITSTAMP:ETHUSD";
         var crypto = "BINANCE:BNBUSD";
 
         const [bitcoinInc, setBitcoinInc] = useState(null);
         const [ethereumInc, setEthereumInc] = useState(null);
         const [tetherInc, settetherInc] = useState(null);
+        const options = {method: 'GET', headers: {'x-cg-demo-api-key': process.env.API_KEY}};
+        const [coin,setCoin]=useState()
+        const [trend,setTrend]=useState([])
+        // const [trend2,setTrend2]=useState([])
+        const [str,setStr]=useState("")
+        // async function getData2(){
+        //     try{
+        //         if(trend[0]?.item.id!=null){
+
+        //             var str2= await trend[0]?.item?.id +"%2C"+ trend[1]?.item?.id +"%2C"+trend[2]?.item?.id;
+        //             console.log("A");
+        //             console.log(str2)
+        //             setStr(str2)
+        //         }
+        //         // const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Ctether&vs_currencies=usd%2Cinr&include_24hr_change=true', options);
+        //         // const data = await response.json();
+        //         // setBitcoinInc(data.bitcoin.usd_24h_change);
+        //         // setEthereumInc(data.ethereum.usd_24h_change);
+        //         // settetherInc(data.tether.usd_24h_change);
+        //     }
+        //     catch(err){
+        //         console.log(err)
+        //     }
+        // }
+
+        async function getData2(){
+            try{
+                const response = await fetch(`https://api.coingecko.com/api/v3/coins/${params.cryptoCoin}`)
+                const res = await response.json();
+                setCoin(res?.symbol)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
 
         async function getData(){
             try{
-                const options = {method: 'GET', headers: {'x-cg-demo-api-key': 'CG-UoL67YyZzQtd9DN5ngpQuLAr'}};
-                    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Ctether&vs_currencies=usd%2Cinr&include_24hr_change=true', options);
-                const data = await response.json();
-                // await console.log(data)
-                setBitcoinInc(data.bitcoin.usd_24h_change);
-                setEthereumInc(data.ethereum.usd_24h_change);
-                settetherInc(data.tether.usd_24h_change);
+
+                const response1 = await fetch('https://api.coingecko.com/api/v3/search/trending', options);
+                const res1 = await response1.json();
+                setTrend(res1?.coins)
+                // if(trend[0]?.item.name!=undefined){
+
+                //     var str2= await trend[0]?.item?.id +"%2C"+ trend[1]?.item?.id +"%2C"+trend[2]?.item?.id;
+                //     console.log("A");
+                //     console.log(str2)
+                //     setStr(str2)
+                // }
             }
             catch(err){
                 console.log(err)
@@ -74,16 +123,19 @@ export default function Home({ params }) {
         }
         useEffect(()=>{
             getData()
+            // setCoin(coin)
+            getData2()
         },[])
+
         // const handleClick = () => {
         //     console.log("click");
         //     getData()
         // }
         return (
-    <div className="flex min-h-screen flex-col bg-[#EFF2F5] text-black gap-y-[20px]">
+    <div className="flex min-h-screen flex-col bg-[#EFF2F5] text-black gap-y-[20px] scrollbar-none scrollbar-track-transparent">
         <div className=" w-full h-[80px] bg-white flex flex-row relative">
             <div className="h-full absolute left-[60px] w-[96px] flex justify-center items-center">
-                <Image src="/images/logo.png" height={24} width={96}></Image>
+                <Image src="/images/logo.png" height={48} width={48}></Image>
             </div>
             <div className="h-full right-[56px]  absolute flex justify-between items-center gap-[32px]">
                 <div className="text-black">Crypto Taxes</div>
@@ -97,7 +149,7 @@ export default function Home({ params }) {
         <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] w-[calc(100dvh-72px]] lg:w-[calc(100dvh-112px]) h-full flex flex-col lg:flex-row gap-[20px] ">
             <div className=" w-[100%] lg:w-[calc((100%-20px)*0.7)] bg-slate-400 flex flex-col gap-[20px]">
                 <div className="bg-black pb-[500px] rounded-[8px] w-full">
-                    <TradingViewWidget coin={tradingviewConst} />
+                    {coin && <TradingViewWidget coin={coin} />}
                 </div>
                 <Tabs value="Overview">
                     <TabsHeader className="bg-transparent" indicatorProps={{
@@ -243,36 +295,23 @@ export default function Home({ params }) {
                 <div className="bg-white flex flex-col gap-[24px] p-[24px]">
                     <div className="font-semibold text-[18px]">Trending Coins</div>
                     <div className="flex flex-col gap-[20px]">
-                        <div className="flex flex-row justify-between items-center">
-                            <div className="flex flex-row gap-[8px] h-[24px]">
-                                <Image src="/images/ethereum.png" width={24} height={24} />
-                                <div>Ethereum (ETH)</div>
-                            </div>
-                            <div className={`${ethereumInc>0?"bg-[#EBF9F4]":"bg-red-300"} rounded-[4px] px-[8px] py-[4px] gap-[8px] text-[16px] text-nowrap flex flex-row justify-center items-center`}> 
-                                <svg className={ethereumInc>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="10" width="10" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
-                                {Math.round(ethereumInc*100)/100}
-                            </div>
-                        </div>
-                        <div className="flex flex-row justify-between items-center">
-                            <div className="flex flex-row gap-[8px] h-[24px]">
-                                <Image src="/images/bitcoin.png" width={24} height={24} />
-                                <div>Bitcoin (BTC)</div>
-                            </div>
-                            <div className={`${bitcoinInc>0?"bg-[#EBF9F4]":"bg-red-300"} rounded-[4px] px-[8px] py-[4px] gap-[8px] text-[16px] text-nowrap flex flex-row justify-center items-center`}> 
-                                <svg className={bitcoinInc>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="10" width="10" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
-                                {Math.round(bitcoinInc*100)/100}
-                            </div>
-                        </div>
-                        <div className="flex flex-row justify-between items-center">
-                            <div className="flex flex-row gap-[8px] h-[24px]">
-                                <Image src="/images/bitcoin.png" width={24} height={24} />
-                                <div>Tether (USDT)</div>
-                            </div>
-                            <div className={`${tetherInc>0?"bg-[#EBF9F4]":"bg-red-300"} rounded-[4px] px-[8px] py-[4px] gap-[8px] text-[16px] text-nowrap flex flex-row justify-center items-center`}> 
-                                <svg className={tetherInc>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="10" width="10" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
-                                {Math.round(tetherInc*100)/100}
-                            </div>
-                        </div>
+                        {trend?.map((row,index) => {
+                            if(index<3){
+                                return(
+
+                                    <div className="flex flex-row justify-between items-center">
+                                        <div className="flex flex-row gap-[8px] h-[24px]">
+                                            <Image src={`${row?.item?.thumb}`} width={24} height={24} />
+                                            <div>{row?.item?.name} ({row?.item?.symbol})</div>
+                                        </div>
+                                        <div className={`${row?.item?.data?.price_change_percentage_24h?.usd>0?"bg-[#EBF9F4]":"bg-[#ee685538]"} rounded-[4px] px-[8px] py-[4px] gap-[8px] text-[16px] text-nowrap flex flex-row justify-center items-center`}> 
+                                            <svg className={row?.item?.data?.price_change_percentage_24h?.usd>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="10" width="10" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
+                                            {Math.round(row?.item?.data?.price_change_percentage_24h?.usd*100)/100} %
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        })}
                     </div>
                 </div>
             </div>
@@ -281,21 +320,55 @@ export default function Home({ params }) {
         <div className="w-[100%] min-h-[470px] bg-white">
             <div className="m-[45px] flex flex-col gap-[15px]">
                 <div className="font-semibold text-[18px]">You May Also Like</div>
-                <div className="gap-[10px] flex flex-row justify-center">
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                </div>
-                <div className="gap-[10px] flex flex-row justify-center">
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                    <div className="border-[1px] rounded-[4px] border-[#E3E3E3] h-[160px] w-[252px]"></div>
-                </div>
+                <Carousel className="w-[95%] relative  justify-between mx-[2.5%]">
+                                <CarouselContent>
+                                    {trend?.map((row, index) => (
+                                        <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                                            <Card className="h-[160px] bg-transparent border-none m-0 p-0">
+                                                <CardContent className="flex flex-col m-0 p-[15px] border-[1px] h-full rounded-[8px]">
+                                                <div className=" flex flex-row items-center"><div className="h-[22px] w-[22px]"><Image src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
+                                                    <div className={`${row?.item?.data?.price_change_percentage_24h?.usd>0?"bg-[#EBF9F4]":"bg-[#ee685538]"} ms-[10px] rounded-[4px] px-[6px] py-[3px] gap-[6px] text-[13px] text-nowrap flex flex-row justify-center items-center`}> 
+                                                        <svg className={row?.item?.data?.price_change_percentage_24h?.usd>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="5" width="5" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
+                                                        {Math.round(row?.item?.data?.price_change_percentage_24h?.usd*100)/100} %
+                                                    </div>
+                                                </div>
+                                                <div className="text-[18px] pt-[4px] overflow-hidden text-nowrap">{row?.item?.data?.price}</div>
+                                                <div className="w-full flex flex-row justify-center items-center"><Image src={`${row?.item?.data?.sparkline}`} width={180} height={60}/></div>
+                                                
+                                                </CardContent>
+                                            </Card>
+                                        </CarouselItem>
+                                    ))}
+                                </CarouselContent>
+                                <CarouselPrevious />
+                                <CarouselNext />
+                </Carousel>
+                <div className="font-semibold text-[18px]">Trending Coins</div>
+                <Carousel className="w-[95%] relative  justify-between mx-[2.5%]">
+                                <CarouselContent>
+                                    {trend?.map((row, index) => (
+                                        <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                                            <Card className="h-[160px] bg-transparent border-none m-0 p-0">
+                                                <CardContent className="flex flex-col m-0 p-[15px] border-[1px] h-full rounded-[8px]">
+                                                <div className=" flex flex-row items-center"><div className="h-[22px] w-[22px]"><Image src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
+                                                    <div className={`${row?.item?.data?.price_change_percentage_24h?.usd>0?"bg-[#EBF9F4]":"bg-[#ee685538]"} ms-[10px] rounded-[4px] px-[6px] py-[3px] gap-[6px] text-[13px] text-nowrap flex flex-row justify-center items-center`}> 
+                                                        <svg className={row?.item?.data?.price_change_percentage_24h?.usd>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="5" width="5" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
+                                                        {Math.round(row?.item?.data?.price_change_percentage_24h?.usd*100)/100} %
+                                                    </div>
+                                                </div>
+                                                <div className="text-[18px] pt-[4px] overflow-hidden text-nowrap">{row?.item?.data?.price}</div>
+                                                <div className="w-full flex flex-row justify-center items-center"><Image src={`${row?.item?.data?.sparkline}`} width={180} height={60}/></div>
+                                                
+                                                </CardContent>
+                                            </Card>
+                                        </CarouselItem>
+                                    ))}
+                                </CarouselContent>
+                                <CarouselPrevious />
+                                <CarouselNext />
+                </Carousel>
             </div>
+                
         </div>
         
     </div>
