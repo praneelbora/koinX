@@ -6,7 +6,8 @@ function TradingViewWidget({ coin }) {
 
   useEffect(
     () => {
-        console.log("here"+coin)
+      coin=coin.toUpperCase()
+      console.log("here "+coin)
       const script = document.createElement("script");
       script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
       script.type = "text/javascript";
@@ -14,7 +15,7 @@ function TradingViewWidget({ coin }) {
       script.innerHTML = `
         {
           "autosize": true,
-          "symbol": "COINEX:${coin.toUpperCase()}USDT",
+          "symbol": "${coin}USD",
           "interval": "D",
           "timezone": "Asia/Kolkata",
           "theme": "light",

@@ -18,9 +18,10 @@ import {
   } from "@material-tailwind/react";
   import { useEffect, useState } from "react";
 import TradingViewWidget from "@/Widgets/TradingViewWidget";
+import { useRouter } from 'next/navigation'
 
 export default function Home({ params }) {
-
+    const router = useRouter()
     // Make a GET request
     // fetch(`https://api.coingecko.com/api/v3/coins/list?x_cg_demo_api_key=${process.env.API_KEY}&ids='bitcoin'&vs_currencies=usd,inr`)
     // .then(response => {
@@ -105,7 +106,10 @@ export default function Home({ params }) {
 
         async function getData(){
             try{
-
+                const response = await fetch(`https://api.coingecko.com/api/v3/coins/${params.cryptoCoin}`)
+                const res = await response.json();
+                setCoin(res?.symbol)
+                
                 const response1 = await fetch('https://api.coingecko.com/api/v3/search/trending', options);
                 const res1 = await response1.json();
                 setTrend(res1?.coins)
@@ -124,7 +128,7 @@ export default function Home({ params }) {
         useEffect(()=>{
             getData()
             // setCoin(coin)
-            getData2()
+            // getData2()
         },[])
 
         // const handleClick = () => {
@@ -135,7 +139,7 @@ export default function Home({ params }) {
     <div className="flex min-h-screen flex-col bg-[#EFF2F5] text-black gap-y-[20px] scrollbar-none scrollbar-track-transparent">
         <div className=" w-full h-[80px] bg-white flex flex-row relative">
             <div className="h-full absolute left-[60px] w-[96px] flex justify-center items-center">
-                <Image src="/images/logo.png" height={48} width={48}></Image>
+                <Image alt="Image" src="/images/logo.png" height={48} width={48}></Image>
             </div>
             <div className="h-full right-[56px]  absolute flex justify-between items-center gap-[32px]">
                 <div className="text-black">Crypto Taxes</div>
@@ -147,8 +151,8 @@ export default function Home({ params }) {
         </div>
         <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] flex flex-row"><div className="font-normal">Cryptocurrencies &gt;&gt;&nbsp;</div>  <div className="font-semibold"> Bitcoin</div></div>
         <div className="mx-[20px] md:mx-[36px] lg:mx-[42px] xl:mx-[56px] w-[calc(100dvh-72px]] lg:w-[calc(100dvh-112px]) h-full flex flex-col lg:flex-row gap-[20px] ">
-            <div className=" w-[100%] lg:w-[calc((100%-20px)*0.7)] bg-slate-400 flex flex-col gap-[20px]">
-                <div className="bg-black pb-[500px] rounded-[8px] w-full">
+            <div className=" w-[100%] lg:w-[calc((100%-20px)*0.7)]  flex flex-col gap-[20px]">
+                <div className="bg-black h-[400px] pb-[500px] rounded-[8px] w-full">
                     {coin && <TradingViewWidget coin={coin} />}
                 </div>
                 <Tabs value="Overview">
@@ -299,9 +303,9 @@ export default function Home({ params }) {
                             if(index<3){
                                 return(
 
-                                    <div className="flex flex-row justify-between items-center">
+                                    <div key={index} className="flex flex-row justify-between items-center">
                                         <div className="flex flex-row gap-[8px] h-[24px]">
-                                            <Image src={`${row?.item?.thumb}`} width={24} height={24} />
+                                            <Image alt="Image" src={`${row?.item?.thumb}`} width={24} height={24} />
                                             <div>{row?.item?.name} ({row?.item?.symbol})</div>
                                         </div>
                                         <div className={`${row?.item?.data?.price_change_percentage_24h?.usd>0?"bg-[#EBF9F4]":"bg-[#ee685538]"} rounded-[4px] px-[8px] py-[4px] gap-[8px] text-[16px] text-nowrap flex flex-row justify-center items-center`}> 
@@ -324,16 +328,16 @@ export default function Home({ params }) {
                                 <CarouselContent>
                                     {trend?.map((row, index) => (
                                         <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
-                                            <Card className="h-[160px] bg-transparent border-none m-0 p-0">
+                                            <Card className="h-[160px] bg-transparent border-none m-0 p-0" onClick={() => router.push(`../${row?.item?.id.toLowerCase()}`)}>
                                                 <CardContent className="flex flex-col m-0 p-[15px] border-[1px] h-full rounded-[8px]">
-                                                <div className=" flex flex-row items-center"><div className="h-[22px] w-[22px]"><Image src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
+                                                <div className=" flex flex-row items-center"><div className="h-[22px] w-[22px]"><Image alt="Image" src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
                                                     <div className={`${row?.item?.data?.price_change_percentage_24h?.usd>0?"bg-[#EBF9F4]":"bg-[#ee685538]"} ms-[10px] rounded-[4px] px-[6px] py-[3px] gap-[6px] text-[13px] text-nowrap flex flex-row justify-center items-center`}> 
                                                         <svg className={row?.item?.data?.price_change_percentage_24h?.usd>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="5" width="5" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
                                                         {Math.round(row?.item?.data?.price_change_percentage_24h?.usd*100)/100} %
                                                     </div>
                                                 </div>
                                                 <div className="text-[18px] pt-[4px] overflow-hidden text-nowrap">{row?.item?.data?.price}</div>
-                                                <div className="w-full flex flex-row justify-center items-center"><Image src={`${row?.item?.data?.sparkline}`} width={180} height={60}/></div>
+                                                <div className="w-full flex flex-row justify-center items-center"><Image alt="Image" src={`${row?.item?.data?.sparkline}`} width={180} height={60}/></div>
                                                 
                                                 </CardContent>
                                             </Card>
@@ -348,16 +352,16 @@ export default function Home({ params }) {
                                 <CarouselContent>
                                     {trend?.map((row, index) => (
                                         <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
-                                            <Card className="h-[160px] bg-transparent border-none m-0 p-0">
+                                            <Card className="h-[160px] bg-transparent border-none m-0 p-0" onClick={() => router.push(`../${row?.item?.id.toLowerCase()}`)}>
                                                 <CardContent className="flex flex-col m-0 p-[15px] border-[1px] h-full rounded-[8px]">
-                                                <div className=" flex flex-row items-center"><div className="h-[22px] w-[22px]"><Image src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
+                                                <div className=" flex flex-row items-center"><div className="h-[22px] w-[22px]"><Image alt="Image" src={`${row?.item?.thumb}`} width={22} height={22} /></div>&nbsp;<div className="text-[14px] flex justify-center items-center">{row?.item?.name}</div>
                                                     <div className={`${row?.item?.data?.price_change_percentage_24h?.usd>0?"bg-[#EBF9F4]":"bg-[#ee685538]"} ms-[10px] rounded-[4px] px-[6px] py-[3px] gap-[6px] text-[13px] text-nowrap flex flex-row justify-center items-center`}> 
                                                         <svg className={row?.item?.data?.price_change_percentage_24h?.usd>0?"":"rotate-180"} data-testid="geist-icon" fill="none" height="5" width="5" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24"  style={{width:13,height:13}}><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg> 
                                                         {Math.round(row?.item?.data?.price_change_percentage_24h?.usd*100)/100} %
                                                     </div>
                                                 </div>
                                                 <div className="text-[18px] pt-[4px] overflow-hidden text-nowrap">{row?.item?.data?.price}</div>
-                                                <div className="w-full flex flex-row justify-center items-center"><Image src={`${row?.item?.data?.sparkline}`} width={180} height={60}/></div>
+                                                <div className="w-full flex flex-row justify-center items-center"><Image alt="Image" src={`${row?.item?.data?.sparkline}`} width={180} height={60}/></div>
                                                 
                                                 </CardContent>
                                             </Card>

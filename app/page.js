@@ -9,8 +9,10 @@ import {
   } from "@material-tailwind/react";
   import { useEffect, useState } from "react";
 import TradingViewWidget from "@/Widgets/TradingViewWidget";
+import { useRouter } from 'next/navigation'
 
 export default function Home({ params }) {
+    const router = useRouter()
 
     // Make a GET request
     // fetch(`https://api.coingecko.com/api/v3/coins/list?x_cg_demo_api_key=${process.env.API_KEY}&ids='bitcoin'&vs_currencies=usd,inr`)
@@ -83,7 +85,7 @@ export default function Home({ params }) {
     <div className="flex min-h-screen flex-col bg-[#EFF2F5] text-black gap-y-[20px]">
         <div className=" w-full h-[80px] bg-white flex flex-row relative">
             <div className="h-full absolute left-[60px] w-[96px] flex justify-center items-center">
-                <Image src="/images/logo.png" height={24} width={96}></Image>
+                <Image alt="Image" src="/images/logo.png" height={24} width={96}></Image>
             </div>
             <div className="h-full right-[56px]  absolute flex justify-between items-center gap-[32px]">
                 <div className="text-black">Crypto Taxes</div>
@@ -245,7 +247,7 @@ export default function Home({ params }) {
                     <div className="flex flex-col gap-[20px]">
                         <div className="flex flex-row justify-between items-center">
                             <div className="flex flex-row gap-[8px] h-[24px]">
-                                <Image src="/images/ethereum.png" width={24} height={24} />
+                                <Image alt="Image" src="/images/ethereum.png" width={24} height={24} />
                                 <div>Ethereum (ETH)</div>
                             </div>
                             <div className={`${ethereumInc>0?"bg-[#EBF9F4]":"bg-red-300"} rounded-[4px] px-[8px] py-[4px] gap-[8px] text-[16px] text-nowrap flex flex-row justify-center items-center`}> 
@@ -255,7 +257,7 @@ export default function Home({ params }) {
                         </div>
                         <div className="flex flex-row justify-between items-center">
                             <div className="flex flex-row gap-[8px] h-[24px]">
-                                <Image src="/images/bitcoin.png" width={24} height={24} />
+                                <Image alt="Image" src="/images/bitcoin.png" width={24} height={24} />
                                 <div>Bitcoin (BTC)</div>
                             </div>
                             <div className={`${bitcoinInc>0?"bg-[#EBF9F4]":"bg-red-300"} rounded-[4px] px-[8px] py-[4px] gap-[8px] text-[16px] text-nowrap flex flex-row justify-center items-center`}> 
@@ -265,7 +267,7 @@ export default function Home({ params }) {
                         </div>
                         <div className="flex flex-row justify-between items-center">
                             <div className="flex flex-row gap-[8px] h-[24px]">
-                                <Image src="/images/bitcoin.png" width={24} height={24} />
+                                <Image alt="Image" src="/images/bitcoin.png" width={24} height={24} />
                                 <div>Tether (USDT)</div>
                             </div>
                             <div className={`${tetherInc>0?"bg-[#EBF9F4]":"bg-red-300"} rounded-[4px] px-[8px] py-[4px] gap-[8px] text-[16px] text-nowrap flex flex-row justify-center items-center`}> 
